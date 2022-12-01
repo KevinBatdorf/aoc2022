@@ -1,0 +1,10 @@
+{
+    "type": "module",
+    "scripts": {
+        "help": "echo npm run start -- ./day1",
+        "start": "npx nodemon"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.20"
+    }
+}
