@@ -32,7 +32,7 @@ const getScore = (data) => data.reduce(
     (acc, [them, me]) => acc + shapes[me] + winner(them, me),
 0)
 
-// Day 2 changes:
+// Part 2 changes:
 // X = lose
 // Y = draw
 // Z = win
