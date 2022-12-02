@@ -51,6 +51,7 @@ const iNeedToLose = (them) => {
 const transform = ([them, me]) => {
     if (me === 'Y') return [
         them,
+        // A, B, C + 23 = X, Y, Z
         String.fromCharCode(them.charCodeAt() + 23)
     ] // Draw
     if (me === 'X') return [them, iNeedToLose(them)]
