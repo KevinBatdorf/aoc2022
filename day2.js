@@ -28,9 +28,8 @@ const winner = (them, me) => {
     return 0;
 };
 
-const getScore = (data) => data.reduce(
-    (acc, [them, me]) => acc + shapes[me] + winner(them, me),
-0)
+const getScore = (data) =>
+    data.reduce((acc, [them, me]) => acc + shapes[me] + winner(them, me), 0);
 
 // Part 2 changes:
 // X = lose
@@ -49,17 +48,18 @@ const iNeedToLose = (them) => {
 
 // Swap instruction value (w/d/l) with shape (r/p/s)
 const transform = ([them, me]) => {
-    if (me === 'Y') return [
-        them,
-        // A, B, C + 23 = X, Y, Z
-        String.fromCharCode(them.charCodeAt() + 23)
-    ] // Draw
-    if (me === 'X') return [them, iNeedToLose(them)]
-    return [them, iNeedToWin(them)]
-}
+    if (me === 'Y')
+        return [
+            them,
+            // A, B, C + 23 = X, Y, Z
+            String.fromCharCode(them.charCodeAt() + 23),
+        ]; // Draw
+    if (me === 'X') return [them, iNeedToLose(them)];
+    return [them, iNeedToWin(them)];
+};
 
-const day1 = getScore(data)
-const day2 = getScore(data.map(transform))
+const day1 = getScore(data);
+const day2 = getScore(data.map(transform));
 
-console.log(day1)
-console.log(day2)
+console.log(day1);
+console.log(day2);
