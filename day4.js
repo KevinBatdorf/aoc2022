@@ -27,8 +27,8 @@ console.log(part1);
 
 // Check if two arrays have any common elements at all
 const part2 = ranges.reduce(
-    (total, next) =>
-        next[0].some((v) => next[1].includes(v)) ? total + 1 : total,
+    (total, [plan1, plan2]) =>
+        plan1.some((v) => plan2.includes(v)) ? total + 1 : total,
     0
 );
 console.log(part2);
