@@ -5,7 +5,6 @@ const state = top.split('\n').slice(0, -1);
 const instructions = bottom.split('\n');
 const length = top.split('\n').slice(-1)[0].split(' ').at(-1);
 
-// Note: intentionally took an imperative approach
 const go = (transform) => {
     //  { 1: [], 2: [], 3: [] }
     const stack = Array.from({ length }).reduce(
