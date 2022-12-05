@@ -36,7 +36,7 @@ const go = (transform) => {
         // so i updated this to accept a transform cb function
         stack[to].push(...transform(moving));
     });
-    // format for the input
+    // format for the expected aoc input
     return Object.values(stack)
         .map((s) => s.at(-1))
         .join('');
