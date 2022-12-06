@@ -11,6 +11,7 @@ const go = (transform) => {
         (acc, _, i) => ({ ...acc, [i + 1]: [] }),
         {}
     );
+    // Build the starting stack
     state.forEach((items, i) => {
         Array.from({ length }).forEach((_, index) => {
             // cut every 3rd set
@@ -26,8 +27,8 @@ const go = (transform) => {
     });
     instructions.forEach((instruction) => {
         if (!instruction) return;
-        // [_1move, 5, _2from, 2, _3to, 6]
-        const [_1, count, _2, from, _3, to] = instruction.split(' ');
+        // [move, 5, from, 2, to, 6] and _ values are discarded
+        const [_, count, __, from, ___, to] = instruction.split(' ');
         // Get what is moving
         const moving = Array.from({ length: count }).map((i) =>
             stack[from].pop()
