@@ -5,15 +5,17 @@ const data = readFileSync('data/day6', 'utf-8').trim();
 const findUniques = (length) => {
     const list = [];
     let count = 0;
-    for (let next of data.split('')) {
+    data.split('').forEach((next, i) => {
         list.push(next);
-        count++;
         // If we have less than the length we need to keep going
-        if (list.length < length) continue;
+        if (list.length < length) return;
         // If we have the length we need to check if we have a unique set
-        if (new Set(list).size === length) break;
+        if (new Set(list).size === length) {
+            count = 1;
+            return;
+        }
         list.shift();
-    }
+    });
     return count;
 };
 
