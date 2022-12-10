@@ -33,7 +33,7 @@ const getRoute = (history, move) => {
 
 const go = (length) =>
     Array.from({ length }).reduce(
-        (lastPath) => lastPath.reduce((h, move) => getRoute(h, move), [[0, 0]]),
+        (lastPath) => lastPath.reduce(getRoute, [[0, 0]]),
         path
     );
 
