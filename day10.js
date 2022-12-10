@@ -4,14 +4,18 @@ const data = readFile(10)
     .split('\n')
     .map((line) => line.split(' '));
 
+const noop = (acc) => [...acc, acc.at(-1)];
+const addx = (acc, [_, arg]) => [
+    ...[...acc, acc.at(-1)],
+    acc.at(-1) + Number(arg),
+];
+const ops = {
+    noop, // return a copy of the prev value
+    addx, // return a copy of the prev value + prev value + arg
+};
+
 const cycles = data
-    .reduce(
-        (acc, [op, arg]) =>
-            op === 'noop'
-                ? [...acc, acc.at(-1)]
-                : [...[...acc, acc.at(-1)], acc.at(-1) + Number(arg)],
-        [1]
-    )
+    .reduce((acc, [op, arg]) => ops[op](acc, [op, arg]), [1])
     .slice(0, -1);
 
 const part1 = [20, 60, 100, 140, 180, 220]
