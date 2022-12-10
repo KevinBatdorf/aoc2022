@@ -11,7 +11,7 @@ const addx = (acc, [_, arg]) => [
 ];
 const ops = {
     noop, // return a copy of the prev value
-    addx, // return a copy of the prev value + prev value + arg
+    addx, // return a copy of the [prev value, prev value + arg]
 };
 
 const cycles = data
