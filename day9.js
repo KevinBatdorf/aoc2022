@@ -1,5 +1,6 @@
-import { readFileSync } from 'fs';
-const data = readFileSync('data/day9', 'utf-8').trim().split('\n');
+import { readFile } from './helpers.js';
+
+const data = readFile(9).split('\n');
 const whichWay = {
     U: [0, 1],
     D: [0, -1],

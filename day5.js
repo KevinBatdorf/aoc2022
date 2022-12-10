@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
+import { readFile } from './helpers.js';
 
-const [top, bottom] = readFileSync('data/day5', 'utf-8').split('\n\n');
+const [top, bottom] = readFile(5).split('\n\n');
 const state = top.split('\n').slice(0, -1);
 const instructions = bottom.split('\n');
 const length = top.split('\n').slice(-1)[0].split(' ').at(-1);

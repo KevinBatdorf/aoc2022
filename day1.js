@@ -1,7 +1,7 @@
-import { readFileSync } from 'fs';
+import { readFile } from './helpers.js';
 
 // [[1, 2, 3], [4, 5, 6]]
-const data = readFileSync('data/day1', 'utf-8')
+const data = readFile(1)
     .split('\n\n')
     .map((elf) => elf.split('\n').map(Number));
 

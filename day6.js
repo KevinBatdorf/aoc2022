@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
+import { readFile } from './helpers.js';
 
-const data = readFileSync('data/day6', 'utf-8').trim();
+const data = readFile(6);
 
 const findUniques = (length) => {
     const list = [];

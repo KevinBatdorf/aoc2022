@@ -1,8 +1,7 @@
-import { readFileSync } from 'fs';
+import { readFile } from './helpers.js';
 
 // [['vJrwpWtwJgWr', 'hcsFMMfFFhFp'], ['etc', 'etc']]
-const data = readFileSync('data/day3', 'utf-8')
-    .trim()
+const data = readFile(3)
     .split('\n')
     .map((rucksack) => [
         rucksack.slice(0, rucksack.length / 2),

@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
+import { readFile } from './helpers.js';
 
-const data = readFileSync('data/day7', 'utf-8').trim().split('\n');
+const data = readFile(7).split('\n');
 
 // Build file tree
 const fileTree = data.reduce(
