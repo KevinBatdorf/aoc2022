@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 const data = readFileSync('data/day9', 'utf-8').trim().split('\n');
-const dirs = {
+const whichWay = {
     U: [0, 1],
     D: [0, -1],
     L: [-1, 0],
@@ -11,7 +11,7 @@ const moves = data
     .map((s) => s.split(' '))
     .flatMap((move) => {
         const [direction, length] = move;
-        return Array.from({ length }, () => dirs[direction]);
+        return Array.from({ length }, () => whichWay[direction]);
     });
 const path = moves.reduce((h, move) => [...h, addIt(h.at(-1), move)], [[0, 0]]);
 
