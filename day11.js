@@ -29,8 +29,12 @@ const doMonkeys = () =>
         .map((line) => line.split('\n'))
         .reduce(buildMonkey, []);
 
-const doRounds = (monkeys, length, opts) =>
-    Array.from({ length }, (_, i) => i)
+const doRounds = (monkeys, length, opts) => {
+    const primesFactor = monkeys.reduce(
+        (acc, { testValue }) => acc * testValue,
+        1
+    );
+    return Array.from({ length }, (_, i) => i)
         .reduce(
             (monkeys) =>
                 monkeys.reduce(
@@ -40,10 +44,6 @@ const doRounds = (monkeys, length, opts) =>
                                 (i) => i !== item
                             );
                             list[i].activeCount++;
-                            const primesFactor = list.reduce(
-                                (acc, { testValue }) => acc * testValue,
-                                1
-                            );
                             const newItem = opts.chill
                                 ? Math.floor((op(item) % primesFactor) / 3)
                                 : op(item) % primesFactor;
@@ -56,6 +56,7 @@ const doRounds = (monkeys, length, opts) =>
         .sort((a, b) => b.activeCount - a.activeCount)
         .slice(0, 2)
         .reduce((a, b) => a.activeCount * b.activeCount);
+};
 
 const part1 = doRounds(doMonkeys(), 20, { chill: true });
 console.log(part1);
