@@ -4,39 +4,59 @@ const data = readFile(12)
     .split('\n')
     .map((r) => r.split(''));
 
-const findNear = (x, y, visited) => {
-    return [
+const findOne = (key) => {
+    const y = data.findIndex((row) => row.includes(key));
+    return {
+        key,
+        y,
+        x: data[y].findIndex((col) => col === key),
+    };
+};
+const findMany = (key) =>
+    data.reduce((acc, row, y) => {
+        const x = row.findIndex((col) => col === key);
+        return x > -1 ? [...acc, { key, x, y }] : acc;
+    }, []);
+const findNear = (x, y) =>
+    [
         { key: data[y - 1]?.[x], x, y: y - 1 }, // N
         { key: data[y + 1]?.[x], x, y: y + 1 }, // S
         { key: data[y]?.[x - 1], x: x - 1, y }, // W
         { key: data[y]?.[x + 1], x: x + 1, y }, // E
-    ]
-        .filter(({ key }) => key !== undefined)
-        .filter(({ x, y }) => !visited.includes(`${x}:${y}`)) // remove visited
-        .sort((a, b) => a.key.localeCompare(b.key)); // prefer higher char
-};
+    ].filter(({ key }) => key !== undefined);
 
-const findPathFromExit = (dir, visited = []) => {
-    const { x, y } = dir;
-    const char = data[y][x] === 'E' ? 69 : data[y][x].charCodeAt();
-    const near = findNear(x, y, visited).filter(
-        ({ key }) => key.charCodeAt() >= char - 1
-    );
+const findPathDown = (from, to) => {
+    const visited = new Set([`${from.x},${from.y}`]);
+    const queue = [from];
+    const distance = [];
+    distance[`${from.x},${from.y}`] = 0;
 
-    // todo: what to do if no near?
-
-    // if we are near the start (S), see if we are one elevation above or equal
-    if (near.find(({ key }) => key === 'S') && [char, char - 1].includes(97)) {
-        return [...visited, `${x}:${y}`];
+    while (queue.length > 0) {
+        const current = queue.shift();
+        const { key, x, y } = current;
+        const char = key === 'E' ? 122 : key.charCodeAt();
+        const near = findNear(x, y).filter(
+            // limit to only the next char or any above
+            ({ key }) =>
+                key.charCodeAt() >= char - 1 || (key === 'S' && 97 >= char - 1)
+        );
+        near.forEach((n) => {
+            const key = `${n.x},${n.y}`;
+            if (visited.has(key)) return;
+            visited.add(key);
+            queue.push(n);
+            distance[key] = distance[`${current.x},${current.y}`] + 1;
+        });
     }
-
-    return findPathFromExit({ x: dir?.x, y: dir?.y }, [
-        ...visited,
-        `${dir.x}:${dir.y}`,
-    ]);
+    const theTo = Array.isArray(to) ? to : [to];
+    const toFind = theTo.map((i) => `${i.x},${i.y}`);
+    const indexes = toFind.map((i) => Object.keys(distance).indexOf(i));
+    const v = indexes.map((i) => distance[Object.keys(distance)[i]]);
+    return Math.min(...v);
 };
 
-const y = data.findIndex((row) => row.includes('E'));
-const x = data[y].findIndex((col) => col === 'E');
-const part1 = findPathFromExit({ x, y }).length;
+const part1 = findPathDown(findOne('E'), findOne('S'));
 console.log(part1);
+
+const part2 = findPathDown(findOne('E'), findMany('a'));
+console.log(part2);
